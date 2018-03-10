@@ -192,7 +192,32 @@ class StickFigureSprite(Sprite):
 		bottom = True
 		falling = True
 
-		#testing git
+		if self.y > 0 and co.y2 >= self.game.canvas_height:
+			self.y = 0
+			bottom = False
+		elif self.y < 0 and co.y1 <= o:
+			self.y = 0
+			top = False
+		if self.x > 0 and co.x2 >= self.game.canvas_wigth:
+			self.x = 0
+			right = False
+		elif self.x < 0 and co.x1 <= 0:
+			self.x = 0
+			left = False
+		for sprite in self.game.spites:
+			if sprite == self:
+				continue
+			sprite_co = sprite.coords()
+			if top and self.y < 0 and collided_top(co, sprite_co):
+				self.y = -self.y
+				top = False
+			if bottom and self.y > 0 and collided_bottom(self.y, co, sprite_co):
+				self.y=sprite_co.y1-co.y2
+				if self.y<0:
+					self.y=0
+				bottom=False
+				top=False
+
 
 
 g = Game()
